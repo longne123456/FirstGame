@@ -1,6 +1,6 @@
-#Làm nhân vật
-
+# Làm nhân vật
 import pygame
+
 
 class Fighter():
     def __init__(self, player, x, y, flip, data):
@@ -19,23 +19,24 @@ class Fighter():
         dx = 0
         dy = 0
 
-        #get keypresses
+        # Nhấn phím
         key = pygame.key.get_pressed()
 
         if self.attacking == False:
-            #movement
+            # Di chuyển
             if key[pygame.K_a]:
                 dx = -SPEED
             if key[pygame.K_d]:
                 dx = SPEED
-            #jump
+            # Nhảy
             if key[pygame.K_w] and self.jump == False :
                 self.vel_y = -30
                 self.jump = True
-            #attack
+            # Tấn công
             if key[pygame.K_r] or key[pygame.K_t]:
                 self.attack(surface, target)
-                #determine which attack type was used
+
+                # Xác định kiểu tấn công nào được sử dụng
                 if key[pygame.K_r]:
                     self.attack_type = 1
                 if key[pygame.K_t]:
@@ -43,11 +44,11 @@ class Fighter():
                 pygame.time.delay(150)
                 self.attacking = False
 
-        #apply gravity
+        # Thực hiện trọng lực
         self.vel_y += GRAVITY
         dy += self.vel_y
 
-        #ensure player stays on screen
+        # Đảm bảo người chơi ở trên màn hình
         if self.rect.left + dx < 0:
             dx = -self.rect.left
         if self.rect.right + dx > screen_width:
@@ -57,13 +58,13 @@ class Fighter():
             self.jump = False
             dy = screen_height - 70 - self.rect.bottom
 
-        #ensure player face each other
+        # Đảm bảo người chơi luôn đối "mặt" với nhau
         if target.rect.centerx > self.rect.centerx:
             self.flip = False
         else:
             self.flip = True
 
-        #update player position
+        # Vị trí nhân vật khi chuyển động
         self.rect.x += dx
         self.rect.y += dy
 
