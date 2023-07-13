@@ -11,6 +11,7 @@ GREEN = (100,205,0)
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 600
 
+pygame.mixer.init()
 pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 
@@ -39,9 +40,17 @@ def draw_health_bar(health, x, y):
     pygame.draw.rect(screen, RED, (x, y, 400, 30))
     pygame.draw.rect(screen, GREEN, (x, y, 400 * ratio, 30))
 
+# nhạc và hiệu ứng âm thanh
+pygame.mixer.music.load("asset/audio/bgmusic.mp3")
+pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.play(-1, 0.0, 5000)
+punch_fx = pygame.mixer.Sound("asset/audio/punch.mp3")
+punch_fx.set_volume(0.1)
+
 # Tạo 2 nhân vật
-fighter_1 = Fighter(True,200, 350,False,0)
-fighter_2 = Fighter(False,700, 350,True,0)
+fighter_1 = Fighter(True,200, 350,False,0,punch_fx)
+fighter_2 = Fighter(False,700, 350,True,0,punch_fx)
+
 
 while True:
 
@@ -67,10 +76,13 @@ while True:
             pygame.quit()
             exit()
 
-   #cho mau giam muot
+   # cho máu giảm mượt
         if  pressed_keys[pygame.K_r] or  pressed_keys[pygame.K_t]:
             if current_time() - nhan_nut_time > 500:
                 Fighter.__init__.attacking = False
+
+
+
     current_time()
     pygame.display.update()
     

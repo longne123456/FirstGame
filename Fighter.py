@@ -5,7 +5,7 @@ ATTACK_Y = 1
 ATTACK_HEIGHT = 0
 
 class Fighter():
-    def __init__(self, player, x, y, flip, data):
+    def __init__(self, player, x, y, flip, data, sound):
         self.flip = False
         self.hitbox = pygame.Rect((x, y, 80, 180)) # hinh chu nhat nguoi choi
         self.vel_y = 0
@@ -15,6 +15,7 @@ class Fighter():
         self.attack_type = 0
         self.health = 100
         self.attack_cooldown =0
+        self.attack_sound = sound
         
 
     def move(self, screen_width, screen_height, surface, target):
@@ -44,7 +45,6 @@ class Fighter():
                 # Xác định kiểu tấn công nào được sử dụng
                 if key[pygame.K_r]:
                     self.attack(surface, target,1,150,100)
-
                     self.attack_type = 1
                     self.dmg = 1
                     self.attack_cooldown = 20
@@ -52,8 +52,8 @@ class Fighter():
                 if key[pygame.K_t]:
                     self.attack(surface, target,1.35,200,50)
                     self.attack_type = 2
-                    self.dmg = 30
-                    self.attack_cooldown = 20                   
+                    self.dmg = 3
+                    self.attack_cooldown = 100                   
                 
                     
                 self.attacking = False
@@ -98,6 +98,7 @@ class Fighter():
     def attack(self, surface, target,ATTACK_Y,ATTACK_WIDTH,ATTACK_HEIGHT):
         if self.attack_cooldown == 0:
             self.attacking = True
+            self.attack_sound.play()
             attacking_hitbox = pygame.Rect(self.hitbox.centerx,self.hitbox.y*ATTACK_Y,ATTACK_WIDTH,ATTACK_HEIGHT)
             pygame.draw.rect(surface, (0, 255, 0), attacking_hitbox)
             if attacking_hitbox.colliderect(target.hitbox):
