@@ -21,6 +21,11 @@ pygame.display.set_caption('Ngo Quyen Fighter')
 
 #timer
 clock = pygame.time.Clock( )
+def current_time():
+    return pygame.time.get_ticks
+nhan_nut_time =0
+pressed_keys = pygame.key.get_pressed()
+
 # Hàm vẽ background
 def draw_bg():
     scaled_bg = pygame.transform.scale(bg_image, (SCREEN_WIDTH,SCREEN_HEIGHT))
@@ -62,7 +67,11 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
-    current_time = pygame.time.get_ticks
+
+        if  pressed_keys[pygame.K_r] or  pressed_keys[pygame.K_t]:
+            if current_time() - nhan_nut_time > 500:
+                Fighter.__init__.attacking = False
+    current_time()
     pygame.display.update()
     
     clock.tick(60)
