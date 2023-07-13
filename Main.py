@@ -19,8 +19,8 @@ bg_image = pygame.image.load("asset/images/background/ngoquyenbg1.jpg").convert_
 
 pygame.display.set_caption('Ngo Quyen Fighter')
 
+#timer
 clock = pygame.time.Clock( )
-
 # Hàm vẽ background
 def draw_bg():
     scaled_bg = pygame.transform.scale(bg_image, (SCREEN_WIDTH,SCREEN_HEIGHT))
@@ -35,8 +35,8 @@ def draw_health_bar(health, x, y):
     pygame.draw.rect(screen, GREEN, (x, y, 400 * ratio, 30))
 
 # Tạo 2 nhân vật
-fighter_1 = Fighter(True,200, 350,True,0)
-fighter_2 = Fighter(False,700, 350,False,0)
+fighter_1 = Fighter(True,200, 350,False,0)
+fighter_2 = Fighter(False,700, 350,True,0)
 
 
 while True:
@@ -62,7 +62,7 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
-    
+    current_time = pygame.time.get_ticks
     pygame.display.update()
     
     clock.tick(60)

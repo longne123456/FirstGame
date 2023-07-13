@@ -1,6 +1,11 @@
 # Làm nhân vật
+from Main import current_time
 import pygame
 
+
+#timer
+clock = pygame.time.Clock( )
+nhan_nut_time=0
 
 class Fighter():
     def __init__(self, player, x, y, flip, data):
@@ -22,27 +27,27 @@ class Fighter():
         # Nhấn phím
         key = pygame.key.get_pressed()
 
-        if self.attacking == False:
+        if self.attacking is False:
             # Di chuyển
             if key[pygame.K_a]:
                 dx = -SPEED
             if key[pygame.K_d]:
                 dx = SPEED
             # Nhảy
-            if key[pygame.K_w] and self.jump == False :
+            if key[pygame.K_w] and self.jump is False :
                 self.vel_y = -30
                 self.jump = True
             # Tấn công
             if key[pygame.K_r] or key[pygame.K_t]:
                 self.attack(surface, target)
-
+                nhan_nut_time = pygame.time.get_ticks()
                 # Xác định kiểu tấn công nào được sử dụng
                 if key[pygame.K_r]:
                     self.attack_type = 1
                 if key[pygame.K_t]:
                     self.attack_type = 2
-                pygame.time.delay(150)
-                self.attacking = False
+                if current_time - nhan_nut_time > 500:
+                    self.attacking = False
 
         # Thực hiện trọng lực
         self.vel_y += GRAVITY
