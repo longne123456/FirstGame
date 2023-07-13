@@ -23,7 +23,7 @@ pygame.display.set_caption('Ngo Quyen Fighter')
 clock = pygame.time.Clock( )
 def current_time():
     return pygame.time.get_ticks
-nhan_nut_time =0
+nhan_nut_time = 0
 pressed_keys = pygame.key.get_pressed()
 
 # Hàm vẽ background
@@ -42,7 +42,6 @@ def draw_health_bar(health, x, y):
 # Tạo 2 nhân vật
 fighter_1 = Fighter(True,200, 350,False,0)
 fighter_2 = Fighter(False,700, 350,True,0)
-
 
 while True:
 
@@ -68,6 +67,7 @@ while True:
             pygame.quit()
             exit()
 
+   #cho mau giam muot
         if  pressed_keys[pygame.K_r] or  pressed_keys[pygame.K_t]:
             if current_time() - nhan_nut_time > 500:
                 Fighter.__init__.attacking = False
