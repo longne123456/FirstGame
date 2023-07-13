@@ -1,5 +1,6 @@
 import pygame
 from Fighter import Fighter
+from camera import CAMERAGROUP
 from sys import exit
 
 #màu
@@ -16,12 +17,12 @@ pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 
 #load ảnh background
-bg_image = pygame.image.load("asset/images/background/ngoquyenbg1.jpg").convert_alpha()
+bg_image = pygame.image.load("asset/images/background/truong.png").convert_alpha()
 
 pygame.display.set_caption('Ngo Quyen Fighter')
 
 #timer
-clock = pygame.time.Clock( )
+clock = pygame.time.Clock()
 def current_time():
     return pygame.time.get_ticks
 nhan_nut_time = 0
@@ -29,8 +30,9 @@ pressed_keys = pygame.key.get_pressed()
 
 # Hàm vẽ background
 def draw_bg():
-    scaled_bg = pygame.transform.scale(bg_image, (SCREEN_WIDTH,SCREEN_HEIGHT))
-    screen.blit(scaled_bg,(0, 0))
+    scaled_bg = pygame.transform.scale(bg_image, (80, 100))
+    screen.blit(bg_image,(0, 0))
+
 
 
 # Hàm (thanh máu)
@@ -46,30 +48,32 @@ pygame.mixer.music.set_volume(0.5)
 pygame.mixer.music.play(-1, 0.0, 5000)
 punch_fx = pygame.mixer.Sound("asset/audio/punch.mp3")
 punch_fx.set_volume(0.1)
+################################################################################# CAMERA ##########################################################################
+camera_group = CAMERAGROUP()
 
-###############################################################################Tạo 2 nhân vật##########################################################
-fighter_1 = Fighter(1,200, 350,False,0,punch_fx)
-fighter_2 = Fighter(2,700, 350,True,0,punch_fx)
 
-########################################################################################################################################################################################################################################
+player1_sheet = pygame.image.load("asset/images/player/KhoaNgo.png").convert_alpha()
+scaled_img_1 = pygame.transform.scale(player1_sheet, (SCREEN_WIDTH,SCREEN_HEIGHT))
+
+fighter_1 = Fighter(1, 200, 350, False, 0,  punch_fx,camera_group)
+#fighter_2 = Fighter(2, 700, 350, True, 0, punch_fx,camera_group)
+
+###############################################################################
 while True:
-
-    # Vẽ background
-    draw_bg()
 
     # Hiện thông tin nhân vật
     draw_health_bar(fighter_1.health, 20, 20)
-    draw_health_bar(fighter_2.health, 580, 20)
+    #draw_health_bar(fighter_2.health, 580, 20)
 
 
     # Di chuyển nhân vật 
-    fighter_1.move(SCREEN_WIDTH,SCREEN_HEIGHT,screen,fighter_2)
-    fighter_2.move(SCREEN_WIDTH,SCREEN_HEIGHT,screen,fighter_1)
+    fighter_1.move(SCREEN_WIDTH,SCREEN_HEIGHT,screen,fighter_1)
+    #fighter_2.move(SCREEN_WIDTH,SCREEN_HEIGHT,screen,fighter_1)
 
 
-    ########################################################### Vẽ nhân vật##########################################################
+################################################################# Vẽ nhân vật ######################################################################
     fighter_1.draw(screen)
-    fighter_2.draw(screen)
+    #fighter_2.draw(screen)
 
 
 ####################################################################################################################
@@ -83,9 +87,11 @@ while True:
             if current_time() - nhan_nut_time > 500:
                 Fighter.__init__.attacking = False
 
-
-
     current_time()
+   
+    camera_group.update()
+    camera_group.custom_draw(fighter_1)
+    #camera_group.custom_draw(fighter_2)
+
     pygame.display.update()
-    
     clock.tick(60)
