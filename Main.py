@@ -47,11 +47,11 @@ pygame.mixer.music.play(-1, 0.0, 5000)
 punch_fx = pygame.mixer.Sound("asset/audio/punch.mp3")
 punch_fx.set_volume(0.1)
 
-# Tạo 2 nhân vật
-fighter_1 = Fighter(True,200, 350,False,0,punch_fx)
-fighter_2 = Fighter(False,700, 350,True,0,punch_fx)
+###############################################################################Tạo 2 nhân vật##########################################################
+fighter_1 = Fighter(1,200, 350,False,0,punch_fx)
+fighter_2 = Fighter(2,700, 350,True,0,punch_fx)
 
-
+########################################################################################################################################################################################################################################
 while True:
 
     # Vẽ background
@@ -62,15 +62,17 @@ while True:
     draw_health_bar(fighter_2.health, 580, 20)
 
 
-    # Di chuyển nhân vật
+    # Di chuyển nhân vật 
     fighter_1.move(SCREEN_WIDTH,SCREEN_HEIGHT,screen,fighter_2)
+    fighter_2.move(SCREEN_WIDTH,SCREEN_HEIGHT,screen,fighter_1)
 
-    # Vẽ nhân vật
+
+    ########################################################### Vẽ nhân vật##########################################################
     fighter_1.draw(screen)
     fighter_2.draw(screen)
 
 
-
+####################################################################################################################
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()

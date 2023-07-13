@@ -6,6 +6,7 @@ ATTACK_HEIGHT = 0
 
 class Fighter():
     def __init__(self, player, x, y, flip, data, sound):
+        self.player = player
         self.flip = False
         self.hitbox = pygame.Rect((x, y, 80, 180)) # hinh chu nhat nguoi choi
         self.vel_y = 0
@@ -28,39 +29,75 @@ class Fighter():
         key = pygame.key.get_pressed()
 
         if self.attacking is False:
-            # Di chuyển
-            if key[pygame.K_a]:
-                dx = -SPEED
-            if key[pygame.K_d]:
-                dx = SPEED
-            # Nhảy
-            if key[pygame.K_w] and self.jump is False :
-                self.vel_y = -30
-                self.jump = True
+########################################################## player 1 dk ##########################################################
+
+            if self.player == 1:
+
+
+                # Di chuyển
+                if key[pygame.K_a]:
+                    dx = -SPEED
+                if key[pygame.K_d]:
+                    dx = SPEED
+                # Nhảy
+                if key[pygame.K_w] and self.jump is False :
+                    self.vel_y = -30
+                    self.jump = True
            
-########################################################## TẤN CÔNG #################################################################################################################################################
+########################################################## TẤN CÔNG ##############################################################
             
-            if key[pygame.K_r] or key[pygame.K_t]:
-                
-                # Xác định kiểu tấn công nào được sử dụng
-                if key[pygame.K_r]:
-                    self.attack(surface, target,1,150,100)
-                    self.attack_type = 1
-                    self.dmg = 1
-                    self.attack_cooldown = 20
-
-                if key[pygame.K_t]:
-                    self.attack(surface, target,1.35,200,50)
-                    self.attack_type = 2
-                    self.dmg = 3
-                    self.attack_cooldown = 100                   
-                
+                if key[pygame.K_r] or key[pygame.K_t]:
                     
-                self.attacking = False
+                    # Xác định kiểu tấn công nào được sử dụng
+                    if key[pygame.K_r]:
+                        self.attack(surface, target,1,150,100)
+                        self.attack_type = 1
+                        self.dmg = 1
+                        self.attack_cooldown = 20
 
+                    if key[pygame.K_t]:
+                        self.attack(surface, target,1.35,200,50)
+                        self.attack_type = 2
+                        self.dmg = 3
+                        self.attack_cooldown = 100                   
+                    
+                        
+                    self.attacking = False
+########################################################## player 1 dk ##########################################################
+
+            if self.player == 2:
+                # Di chuyển
+                if key[pygame.K_LEFT]:
+                    dx = -SPEED
+                if key[pygame.K_RIGHT]:
+                    dx = SPEED
+                # Nhảy
+                if key[pygame.K_UP] and self.jump is False :
+                    self.vel_y = -30
+                    self.jump = True
+           
+########################################################## TẤN CÔNG ##############################################################
+            
+                if key[pygame.K_KP1] or key[pygame.K_KP2]:
+                    
+                    # Xác định kiểu tấn công nào được sử dụng
+                    if key[pygame.K_KP1]:
+                        self.attack(surface, target,1,150,100)
+                        self.attack_type = 1
+                        self.dmg = 1
+                        self.attack_cooldown = 20
+
+                    if key[pygame.K_KP2]:
+                        self.attack(surface, target,1.35,200,50)
+                        self.attack_type = 2
+                        self.dmg = 3
+                        self.attack_cooldown = 100                   
+                    
+                        
+                    self.attacking = False
 
              
-###########################################################################################################################################################################################################
+####################################################################################################################################
 
 ########################################################## Vật lý ############################################################################################################################################
         self.vel_y += GRAVITY
