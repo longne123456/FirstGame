@@ -17,7 +17,7 @@ pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 
 #load ảnh background
-bg_image = pygame.image.load("asset/images/background/truong.png").convert_alpha()
+#bg_image = pygame.image.load("asset/images/background/truong.png").convert_alpha()
 
 pygame.display.set_caption('Ngo Quyen Fighter')
 
@@ -25,22 +25,16 @@ pygame.display.set_caption('Ngo Quyen Fighter')
 clock = pygame.time.Clock()
 def current_time():
     return pygame.time.get_ticks
-nhan_nut_time = 0
+nhan_nut_time = 0   
 pressed_keys = pygame.key.get_pressed()
 
 # Hàm vẽ background
-def draw_bg():
-    scaled_bg = pygame.transform.scale(bg_image, (80, 100))
-    screen.blit(bg_image,(0, 0))
+#def draw_bg():
+    #scaled_bg = pygame.transform.scale(bg_image, (80, 100))
+    #screen.blit(bg_image,(0, 0))
 
 
-
-# Hàm (thanh máu)
-def draw_health_bar(health, x, y):
-    ratio = health / 100
-    pygame.draw.rect(screen, WHITE, (x-2, y-2, 404, 34))
-    pygame.draw.rect(screen, RED, (x, y, 400, 30))
-    pygame.draw.rect(screen, GREEN, (x, y, 400 * ratio, 30))
+screen.fill('#71ddee')
 
 # nhạc và hiệu ứng âm thanh
 pygame.mixer.music.load("asset/audio/bgmusic.mp3")
@@ -52,31 +46,39 @@ punch_fx.set_volume(0.1)
 camera_group = CAMERAGROUP()
 
 
-player1_sheet = pygame.image.load("asset/images/player/KhoaNgo.png").convert_alpha()
-scaled_img_1 = pygame.transform.scale(player1_sheet, (SCREEN_WIDTH,SCREEN_HEIGHT))
+fighter_1 = Fighter(1, 680, 400, False, 0,  punch_fx, camera_group)
+fighter_2 = Fighter(2, 1180, 400, True, 0, punch_fx, camera_group)
 
-fighter_1 = Fighter(1, 200, 350, False, 0,  punch_fx,camera_group)
-#fighter_2 = Fighter(2, 700, 350, True, 0, punch_fx,camera_group)
 
-###############################################################################
+##################################################################################################################################################
+
+# Hàm (thanh máu)
+def draw_health_bar(health, x, y):
+    ratio = health / 100
+    pygame.draw.rect(screen, WHITE, (x-2, y-2, 404, 34))
+    pygame.draw.rect(screen, RED, (x, y, 400, 30))
+    pygame.draw.rect(screen, GREEN, (x, y, 400 * ratio, 30))
+
+
+
 while True:
 
     # Hiện thông tin nhân vật
     draw_health_bar(fighter_1.health, 20, 20)
-    #draw_health_bar(fighter_2.health, 580, 20)
+    draw_health_bar(fighter_2.health, 580, 20)
 
 
     # Di chuyển nhân vật 
     fighter_1.move(SCREEN_WIDTH,SCREEN_HEIGHT,screen,fighter_1)
-    #fighter_2.move(SCREEN_WIDTH,SCREEN_HEIGHT,screen,fighter_1)
+    fighter_2.move(SCREEN_WIDTH,SCREEN_HEIGHT,screen,fighter_1)
 
 
 ################################################################# Vẽ nhân vật ######################################################################
     fighter_1.draw(screen)
-    #fighter_2.draw(screen)
+    fighter_2.draw(screen)
 
 
-####################################################################################################################
+####################################################################################################################################################
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -90,8 +92,9 @@ while True:
     current_time()
    
     camera_group.update()
+    #cameraditheo ng choi nao
     camera_group.custom_draw(fighter_1)
-    #camera_group.custom_draw(fighter_2)
 
+    
     pygame.display.update()
     clock.tick(60)

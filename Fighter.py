@@ -1,14 +1,20 @@
 # Làm nhân vật
 import pygame
+
+
 ATTACK_WIDTH = 0
 ATTACK_Y = 1
 ATTACK_HEIGHT = 0
+
 #pygame.Rect((x, y, 80, 180))
 class Fighter(pygame.sprite.Sprite):
-    def __init__(self, player, x, y, flip, data, sound):
+    def __init__(self, player, x, y, flip, data, sound, group):
+        super().__init__(group)
         self.player = player
         self.flip = False
-        self.hitbox = pygame.Rect((x, y, 80, 180))
+        self.hitbox = pygame.Rect((x, y, 40, 100))
+        self.image = pygame.image.load("asset/images/player/KhoaNgo.png").convert_alpha()
+        self.scaled_image = pygame.transform.scale(self.image, (80, 100))
         self.vel_y = 0
         self.jump = False
         self.attacking = False
@@ -98,12 +104,10 @@ class Fighter(pygame.sprite.Sprite):
 
              
 ####################################################################################################################################################
-
+#BACKGROUND 2000x600
 ########################################################## Vật lý ############################################################################################################################################
         self.vel_y += GRAVITY
         dy += self.vel_y
-
-
 
 
 
@@ -111,12 +115,14 @@ class Fighter(pygame.sprite.Sprite):
         # Đảm bảo người chơi ở trên màn hình
         if self.hitbox.left + dx < 0:
             dx = -self.hitbox.left
-        if self.hitbox.right + dx > screen_width:
-            dx = screen_width - self.hitbox.right
+        if self.hitbox.right + dx > 2000:
+            dx = 2000 - self.hitbox.right
         if self.hitbox.bottom + dy > screen_height - 70:
             self.vel_y = 0
             self.jump = False
             dy = screen_height - 70 - self.hitbox.bottom
+        
+        
 
         # Đảm bảo người chơi luôn đối "mặt" với nhau
         if target.hitbox.centerx > self.hitbox.centerx:

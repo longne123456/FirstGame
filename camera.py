@@ -13,22 +13,26 @@ class CAMERAGROUP(pygame.sprite.Group):
         self.half_h = self.display_surface.get_size()[0] // 2
 
         #background
-        self.background = pygame.image.load('asset/images/background/truong.png').convert()
-        self.background_rect = self.background.get_rect(topleft = (0,0))
+        self.background = pygame.image.load('asset/images/background/truong.png').convert_alpha()
+        self.scaled_bg = pygame.transform.scale(self.background, (2000, 650)) 
+        self.background_rect = self.scaled_bg.get_rect(topleft = (0,0))
 
     def center_target_camera(self,target):
         self.offset.x = target.hitbox.centerx - self.half_w
         self.offset.y = target.hitbox.centery - self.half_h
+        if self.offset.x <= 0:
+            self.offset.x = 0
+        elif self.offset.x >= 1000:
+            self.offset.x = 1000
 
     def custom_draw(self,Fighter):
         self.center_target_camera(Fighter)
         
         #background 
-        
-
         background_offset = self.background_rect.topleft - self.offset
-        self.display_surface.blit(self.background,background_offset)
+        self.display_surface.blit(self.scaled_bg,background_offset)
+
         #sort
-        for sprite in sorted(self.sprites(),key = lambda sprite: sprite.rect.centery):
-            offset_pos = sprite.rect.topleft - self.offset
-            self.display_surface.blit(sprite.image,offset_pos)
+        for sprite in sorted(self.sprites(),key = lambda sprite: sprite.hitbox.centery):
+            offset_pos = sprite.hitbox.topleft - self.offset
+            self.display_surface.blit(sprite.scaled_image,offset_pos)
