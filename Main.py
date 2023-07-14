@@ -34,7 +34,6 @@ pressed_keys = pygame.key.get_pressed()
     #screen.blit(bg_image,(0, 0))
 
 
-screen.fill('#71ddee')
 
 # nhạc và hiệu ứng âm thanh
 pygame.mixer.music.load("asset/audio/bgmusic.mp3")
@@ -62,14 +61,14 @@ def draw_health_bar(health, x, y):
 
 
 while True:
-
+    screen.fill('#71ddee')
     # Hiện thông tin nhân vật
     draw_health_bar(fighter_1.health, 20, 20)
     draw_health_bar(fighter_2.health, 580, 20)
 
 
     # Di chuyển nhân vật 
-    fighter_1.move(SCREEN_WIDTH,SCREEN_HEIGHT,screen,fighter_1)
+    fighter_1.move(SCREEN_WIDTH,SCREEN_HEIGHT,screen,fighter_2)
     fighter_2.move(SCREEN_WIDTH,SCREEN_HEIGHT,screen,fighter_1)
 
 
@@ -92,9 +91,10 @@ while True:
     current_time()
    
     camera_group.update()
-    #cameraditheo ng choi nao
+    #camera di theo ng choi nao
     camera_group.custom_draw(fighter_1)
-
+    
     
     pygame.display.update()
     clock.tick(60)
+    

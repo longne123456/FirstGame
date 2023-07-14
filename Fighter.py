@@ -21,7 +21,7 @@ class Fighter(pygame.sprite.Sprite):
         self.dmg = 0
         self.attack_type = 0
         self.health = 100
-        self.attack_cooldown =0
+        self.attack_cooldown = 0
         self.attack_sound = sound
         
 
