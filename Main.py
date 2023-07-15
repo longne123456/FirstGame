@@ -1,4 +1,5 @@
 import pygame
+from button import Button
 from Fighter import Fighter
 from camera import CAMERAGROUP
 from sys import exit
@@ -16,8 +17,6 @@ pygame.mixer.init()
 pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 
-#load ảnh background
-#bg_image = pygame.image.load("asset/images/background/truong.png").convert_alpha()
 
 pygame.display.set_caption('Ngo Quyen Fighter')
 
@@ -27,12 +26,6 @@ def current_time():
     return pygame.time.get_ticks
 nhan_nut_time = 0   
 pressed_keys = pygame.key.get_pressed()
-
-# Hàm vẽ background
-#def draw_bg():
-    #scaled_bg = pygame.transform.scale(bg_image, (80, 100))
-    #screen.blit(bg_image,(0, 0))
-
 
 
 # nhạc và hiệu ứng âm thanh
@@ -44,28 +37,18 @@ punch_fx.set_volume(0.1)
 ################################################################################# CAMERA ##########################################################################
 camera_group = CAMERAGROUP()
 
-
-fighter_1 = Fighter(1, 680, 400, False, 0,  punch_fx, camera_group)
-fighter_2 = Fighter(2, 1180, 400, True, 0, punch_fx, camera_group)
+fighter_1 = Fighter(1, 680, 200, False, 0,  punch_fx, camera_group)
+fighter_2 = Fighter(2, 1180, 200, True, 0, punch_fx, camera_group)
 
 
 ##################################################################################################################################################
 
 # Hàm (thanh máu)
-def draw_health_bar(health, x, y):
-    ratio = health / 100
-    pygame.draw.rect(screen, WHITE, (x-2, y-2, 404, 34))
-    pygame.draw.rect(screen, RED, (x, y, 400, 30))
-    pygame.draw.rect(screen, GREEN, (x, y, 400 * ratio, 30))
 
+run = True
 
-
-while True:
+while run:
     screen.fill('#71ddee')
-    # Hiện thông tin nhân vật
-    draw_health_bar(fighter_1.health, 20, 20)
-    draw_health_bar(fighter_2.health, 580, 20)
-
 
     # Di chuyển nhân vật 
     fighter_1.move(SCREEN_WIDTH,SCREEN_HEIGHT,screen,fighter_2)
@@ -81,6 +64,7 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
+            run = False
             exit()
 
    # cho máu giảm mượt

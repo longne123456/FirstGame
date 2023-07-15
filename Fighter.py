@@ -14,7 +14,7 @@ class Fighter(pygame.sprite.Sprite):
         self.flip = False
         self.hitbox = pygame.Rect((x, y, 40, 100))
         self.image = pygame.image.load("asset/images/player/KhoaNgo.png").convert_alpha()
-        self.scaled_image = pygame.transform.scale(self.image, (80, 100))
+        self.scaled_image = pygame.transform.scale(self.image, (96, 152))
         self.vel_y = 0
         self.jump = False
         self.attacking = False
