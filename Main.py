@@ -3,6 +3,7 @@ from button import Button
 from Fighter import Fighter
 from camera import CAMERAGROUP
 from sys import exit
+from menu import mainMenu
 
 #màu
 RED = (255, 0, 0)
@@ -42,6 +43,8 @@ fighter_2 = Fighter(2, 1180, 200, True, 0, punch_fx, camera_group)
 
 
 ##################################################################################################################################################
+mainMenu(screen)
+mainMenu.main_menu()
 
 # Hàm (thanh máu)
 
