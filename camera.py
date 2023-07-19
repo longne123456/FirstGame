@@ -13,7 +13,7 @@ class CAMERAGROUP(pygame.sprite.Group):
         self.half_h = self.display_surface.get_size()[0] // 2
 
         #background
-        self.background = pygame.image.load('asset/images/background/TRUONG2.png').convert_alpha()
+        self.background = pygame.image.load('asset/images/background/truong.png').convert_alpha()
         self.scaled_bg = pygame.transform.scale(self.background, (2500, 650)) 
         self.background_rect = self.scaled_bg.get_rect(topleft = (0,0))
 
