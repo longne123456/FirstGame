@@ -7,22 +7,22 @@ class CAMERAGROUP(pygame.sprite.Group):
         super().__init__()
     
         self.display_surface = pygame.display.get_surface()
-        #camera bi be cong
+        #camera bị bẻ cong
         self.offset = pygame.math.Vector2()
         self.half_w = self.display_surface.get_size()[0] // 2
         self.half_h = self.display_surface.get_size()[0] // 2
 
         #background
-        self.background = pygame.image.load('asset/images/background/TRUONG2.png').convert_alpha()
+        self.background = pygame.image.load('asset/images/background/truong.png').convert_alpha()
         self.scaled_bg = pygame.transform.scale(self.background, (2500, 650)) 
         self.background_rect = self.scaled_bg.get_rect(topleft = (0,0))
 
     def center_target_camera(self,target):
-        self.offset.x = target.hitbox.centerx - self.half_w
+        self.offset.x = target.hitbox.centerx  - self.half_h
         #self.offset.y = target.hitbox.centery - self.half_h
         if self.offset.x <= 0:
             self.offset.x = 0
-        elif self.offset.x >= 1000:
+        elif self.offset.x >= 1050:
             self.offset.x = 1000
 
     def custom_draw(self,Fighter):
