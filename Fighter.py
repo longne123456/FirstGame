@@ -98,7 +98,7 @@ class Fighter(pygame.sprite.Sprite):
 
              
 
-#BACKGROUND 2000x600
+#BACKGROUND 2500x600
         self.vel_y += GRAVITY
         dy += self.vel_y
 
