@@ -36,5 +36,3 @@ class CAMERAGROUP(pygame.sprite.Group):
         for sprite in sorted(self.sprites(),key = lambda sprite: sprite.hitbox.centery):
             offset_pos = sprite.hitbox.topleft - self.offset
             self.display_surface.blit(sprite.scaled_image,offset_pos)
-
-    
