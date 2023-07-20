@@ -59,7 +59,7 @@ def after_playbutton():
                 run = False
                 exit()
 
-    # cho máu giảm mượt
+            # Smoothen blood descend
             if  pressedKeys[pygame.K_r] or  pressedKeys[pygame.K_t]:
                 if current_time() - pressedKeyTime > 500:
                     Fighter.__init__.attacking = False
@@ -67,8 +67,7 @@ def after_playbutton():
         current_time()
 
         cameraGroup.update()
-        #camera di theo ng choi nao
-        cameraGroup.custom_draw(firstFighter, secondFighter)        
+        cameraGroup.setCameraToCenter(firstFighter, secondFighter)        
         
         pygame.display.update()
         clock.tick(60)
@@ -78,8 +77,6 @@ def after_playbutton():
 def play():
     while True:
         after_playbutton()
-        print(firstFighter.hitbox.x)
-        print(secondFighter.hitbox.x)
         
 def options():
     while True:
