@@ -25,8 +25,16 @@ class CAMERAGROUP(pygame.sprite.Group):
         elif self.offset.x >= 1000:
             self.offset.x = 1000
 
-    def custom_draw(self,Fighter):
-        self.center_target_camera(Fighter)
+    def centerCamera(self, firstFighter, secondFighter):
+        self.offset.x = ((firstFighter.hitbox.centerx - self.half_w) + (secondFighter.hitbox.centerx - self.half_w))/2
+        if self.offset.x <= 0:
+            self.offset.x = 0
+        elif self.offset.x >= 1000:
+            self.offset.x = 1000
+
+    
+    def custom_draw(self,Fighter1,Fighter2):
+        self.centerCamera(Fighter1,Fighter2)
              
         #background 
         background_offset = self.background_rect.topleft - self.offset
@@ -36,3 +44,5 @@ class CAMERAGROUP(pygame.sprite.Group):
         for sprite in sorted(self.sprites(),key = lambda sprite: sprite.hitbox.centery):
             offset_pos = sprite.hitbox.topleft - self.offset
             self.display_surface.blit(sprite.scaled_image,offset_pos)
+
+    

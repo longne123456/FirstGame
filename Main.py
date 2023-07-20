@@ -68,7 +68,7 @@ def after_playbutton():
 
         cameraGroup.update()
         #camera di theo ng choi nao
-        cameraGroup.custom_draw(firstFighter)        
+        cameraGroup.custom_draw(firstFighter, secondFighter)        
         
         pygame.display.update()
         clock.tick(60)
@@ -78,6 +78,8 @@ def after_playbutton():
 def play():
     while True:
         after_playbutton()
+        print(firstFighter.hitbox.x)
+        print(secondFighter.hitbox.x)
         
 def options():
     while True:
