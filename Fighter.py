@@ -2,10 +2,15 @@
 import pygame
 
 
-
 ATTACK_WIDTH = 0
 ATTACK_Y = 1
 ATTACK_HEIGHT = 0
+RED = (255, 0, 0)
+GREEN = (0,255,0)
+YELLOW = (255,255,0)
+WHITE = (255,255,255)
+SCREEN_WIDTH = 1000
+SCREEN_HEIGHT = 600
 
 #pygame.Rect((x, y, 80, 180))
 class Fighter(pygame.sprite.Sprite):
@@ -36,11 +41,7 @@ class Fighter(pygame.sprite.Sprite):
         key = pygame.key.get_pressed()
 
         if self.attacking is False:
-########################################################## player 1 dk ##########################################################
-
             if self.player == 1:
-
-
                 # Di chuyển
                 if key[pygame.K_a]:
                     dx = -SPEED
@@ -50,8 +51,6 @@ class Fighter(pygame.sprite.Sprite):
                 if key[pygame.K_w] and self.jump is False :
                     self.vel_y = -30
                     self.jump = True
-           
-########################################################## TẤN CÔNG 1 ##############################################################
             
                 if key[pygame.K_r] or key[pygame.K_t]:
                     
@@ -66,16 +65,8 @@ class Fighter(pygame.sprite.Sprite):
                         self.attack(surface, target,1.35,200,50)
                         self.attack_type = 2
                         self.dmg = 3
-                        self.attack_cooldown = 100                   
-                    
-                        
+                        self.attack_cooldown = 100                                           
                     self.attacking = False
-######################################################### PHÒNG THỦ 1 #########################################################################
-
-            #if key[pygame.K_a]:
-
-
-########################################################## player 2 dk ##########################################################
 
             if self.player == 2:
                 # Di chuyển
@@ -87,11 +78,8 @@ class Fighter(pygame.sprite.Sprite):
                 if key[pygame.K_UP] and self.jump is False :
                     self.vel_y = -30
                     self.jump = True
-           
-########################################################## TẤN CÔNG 2 ##############################################################
-            
-                if key[pygame.K_KP1] or key[pygame.K_KP2]:
-                    
+                       
+                if key[pygame.K_KP1] or key[pygame.K_KP2]:                    
                     # Xác định kiểu tấn công nào được sử dụng
                     if key[pygame.K_KP1]:
                         self.attack(surface, target,1,150,100)
@@ -109,16 +97,12 @@ class Fighter(pygame.sprite.Sprite):
                     self.attacking = False
 
              
-####################################################################################################################################################
+
 #BACKGROUND 2000x600
-########################################################## Vật lý ############################################################################################################################################
         self.vel_y += GRAVITY
         dy += self.vel_y
 
 
-
-########################################################################################################################################################################################################################################
-        # Đảm bảo người chơi ở trên màn hình
         if self.hitbox.left + dx < 0:
             dx = -self.hitbox.left
         if self.hitbox.right + dx > 2000:
@@ -139,9 +123,7 @@ class Fighter(pygame.sprite.Sprite):
         # Vị trí nhân vật khi chuyển động
         self.hitbox.x += dx
         self.hitbox.y += dy
-        
-########################################################################################################################################################################################################################################
-        # attack cooldown
+
         if self.attack_cooldown > 0:
             self.attack_cooldown -= 2
     
@@ -153,9 +135,9 @@ class Fighter(pygame.sprite.Sprite):
             pygame.draw.rect(surface, (0, 255, 0), attacking_hitbox)
             if attacking_hitbox.colliderect(target.hitbox):
                 target.health -= self.dmg
+                
     
     def draw(seft, surface):
         pygame.draw.rect(surface, (255, 0, 0), seft.hitbox)
 
         
-########################################################################################################################################################################################################################################

@@ -11,26 +11,20 @@ class mainMenu(pygame.sprite.Sprite):
         super().__init__()
         self.SCREEN = pygame.display.set_mode((1000, 600))
 
-    BG = pygame.image.load('asset\menu.png')
+    BG = pygame.image.load('asset/menu.png').convert_alpha()
 
     def get_font(size): # Returns Press-Start-2P in the desired size
         return pygame.font.Font('asset\font\font.ttf', size)
 
-    def play(self):
+    def play():
         while True:
             PLAY_MOUSE_POS = pygame.mouse.get_pos()
-
-            self.SCREEN.fill("black")
-
-            PLAY_TEXT = get_font(45).render("This is the PLAY screen.", True, "White")
-            PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 260))
-            self.SCREEN.blit(PLAY_TEXT, PLAY_RECT)
 
             PLAY_BACK = Button(image=None, pos=(640, 460), 
                                 text_input="BACK", font=get_font(75), base_color="White", hovering_color="Green")
 
             PLAY_BACK.changeColor(PLAY_MOUSE_POS)
-            PLAY_BACK.update(self.SCREEN)
+            PLAY_BACK.update(SCREEN)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -64,7 +58,7 @@ class mainMenu(pygame.sprite.Sprite):
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if OPTIONS_BACK.checkForInput(OPTIONS_MOUSE_POS):
-                        main_menu()
+                        main_menu(self)
 
             pygame.display.update()
 
@@ -96,9 +90,9 @@ class mainMenu(pygame.sprite.Sprite):
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
-                        play()
+                        play(self)
                     if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
-                        options()
+                        options(self)
                     if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
                         pygame.quit()
                         sys.exit()
