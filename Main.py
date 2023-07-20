@@ -3,10 +3,12 @@ from button2 import Button2
 from Fighter import Fighter
 from camera import CAMERAGROUP
 from sys import exit
-#from menu import mainMenu
+
+
 
 #background font
 BG = pygame.image.load("asset/menu.png")
+scaled_BG = pygame.transform.scale(BG, (2500, 650))
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("asset/font/font.ttf", size)
 
@@ -43,10 +45,8 @@ punch_fx.set_volume(0.1)
 ################################################################################# CAMERA ##########################################################################
 
 camera_group = CAMERAGROUP()
-
 fighter_1 = Fighter(1, 680, 200, False, 0,  punch_fx, camera_group)
 fighter_2 = Fighter(2, 1180, 200, True, 0, punch_fx, camera_group)
-
 
 ##################################################################################################################################################
 #mainMenu(screen)
@@ -121,13 +121,13 @@ def main_menu():
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
         MENU_TEXT = get_font(100).render("MAIN MENU", True, "#b68f40")
-        MENU_RECT = MENU_TEXT.get_rect(center=(640, 100))
+        MENU_RECT = MENU_TEXT.get_rect(center=(SCREEN_WIDTH/2, 100))
 
-        PLAY_BUTTON = Button2(image=pygame.image.load("asset/Play Rect.png"), pos=(640, 250), 
+        PLAY_BUTTON = Button2(image=pygame.image.load("asset/Play Rect.png"), pos=(SCREEN_WIDTH/2, (SCREEN_HEIGHT/2)-75), 
                             text_input="PLAY", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
-        OPTIONS_BUTTON = Button2(image=pygame.image.load("asset/Options Rect.png"), pos=(640, 400), 
+        OPTIONS_BUTTON = Button2(image=pygame.image.load("asset/Options Rect.png"), pos=(SCREEN_WIDTH/2, (SCREEN_HEIGHT/2)+75), 
                             text_input="OPTIONS", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
-        QUIT_BUTTON = Button2(image=pygame.image.load("asset/Quit Rect.png"), pos=(640, 550), 
+        QUIT_BUTTON = Button2(image=pygame.image.load("asset/Quit Rect.png"), pos=(SCREEN_WIDTH/2, (SCREEN_HEIGHT/2)+(75*3)), 
                             text_input="QUIT", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
 
         screen.blit(MENU_TEXT, MENU_RECT)
