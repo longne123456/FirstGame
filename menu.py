@@ -42,8 +42,8 @@ class mainMenu(pygame.sprite.Sprite):
 
             self.SCREEN.fill("white")
 
-            OPTIONS_TEXT = get_font(45).render("This is the OPTIONS screen.", True, "Black")
-            OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(640, 260))
+            OPTIONS_TEXT = get_font(20).render("This is the OPTIONS screen.", True, "Black")
+            OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(1, 1))
             self.SCREEN.blit(OPTIONS_TEXT, OPTIONS_RECT)
 
             OPTIONS_BACK = Button(image=None, pos=(640, 460), 
