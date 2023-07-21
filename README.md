@@ -1,4 +1,15 @@
 # FirstGame
+<!-- toc -->
 
-Đây là dự án game đầu tiên của câu lạc bộ tin học Ngô Quyền nên có gì sai sót mọi người chửi DucTo nhé! Đừng chửi cả team ạ. Xin chân thành cảm ơn!
+<!-- tocstop -->
+We are a team from an Informatics Club in Dong Nai, Vietnam named [Ngo Quyen The Pioneers](https://www.facebook.com/NQThePioneers). This is our first game using Pygame library so if you find any bugs or inconveniences, or improvements don't hesitate to tell us. 
 
+## Credits
+<!-- toc -->
+
+<!-- tocstop -->
+Thanks for anyone contributing to this project:
+- Nguyen Hoang Long
+- Tran Quang Huy
+- Nguyen Minh Duc
+- Nguyen Tran Khanh My
