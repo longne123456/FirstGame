@@ -15,7 +15,9 @@ clock = pygame.time.Clock()
 class Healthbar(pygame.sprite.Sprite):
 	def __init__(self):
 		super().__init__()
-		
+		self.image = pygame.Surface((40,40))
+		self.image.fill((RED))
+		self.rect = self.image.get_rect(center = (500,300))
 		self.current_health = 200
 		self.target_health = 500
 		self.max_health = 1000

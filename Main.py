@@ -40,12 +40,18 @@ pygame.mixer.music.play(-1, 0.0, 5000)
 punchSound = pygame.mixer.Sound("asset/audio/punch.mp3")
 punchSound.set_volume(0.1)
 
+
+
 # Camera
 cameraGroup = CAMERAGROUP()
+
 firstFighter = Fighter(1, 680, 200, False, 0,  punchSound, cameraGroup)
 secondFighter = Fighter(2, 1180, 200, True, 0, punchSound, cameraGroup)
 
+
+
 def after_playbutton():
+        
         firstFighter.move(SCREEN_WIDTH,SCREEN_HEIGHT,screen,secondFighter)
         secondFighter.move(SCREEN_WIDTH,SCREEN_HEIGHT,screen,firstFighter)
 
@@ -59,7 +65,7 @@ def after_playbutton():
                 run = False
                 exit()
 
-    # cho máu giảm mượt
+            # Smoothen blood descend
             if  pressedKeys[pygame.K_r] or  pressedKeys[pygame.K_t]:
                 if current_time() - pressedKeyTime > 500:
                     Fighter.__init__.attacking = False
@@ -67,8 +73,7 @@ def after_playbutton():
         current_time()
 
         cameraGroup.update()
-        #camera di theo ng choi nao
-        cameraGroup.custom_draw(firstFighter)        
+        cameraGroup.setCameraToCenter(firstFighter, secondFighter)        
         
         pygame.display.update()
         clock.tick(60)
@@ -85,11 +90,11 @@ def options():
 
         screen.fill("white")
 
-        OPTIONS_TEXT = get_font(45).render("This is the OPTIONS screen.", True, "Black")
-        OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(640, 260))
+        OPTIONS_TEXT = get_font(35).render("This is the OPTIONS screen.", True, "Black")
+        OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(500, 200))
         screen.blit(OPTIONS_TEXT, OPTIONS_RECT)
 
-        OPTIONS_BACK = Button2(image=None, pos=(640, 460), text_input="BACK", font=get_font(75), base_color="Black", hovering_color="Green")
+        OPTIONS_BACK = Button2(image=None, pos=(500, 460), text_input="BACK", font=get_font(75), base_color="Black", hovering_color="Green")
 
         OPTIONS_BACK.changeColor(OPTIONS_MOUSE_POS)
         OPTIONS_BACK.update(screen)
