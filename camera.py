@@ -1,6 +1,8 @@
 import pygame
-from pygame.sprite import AbstractGroup
-from Fighter import Fighter
+from option import Option
+
+SCREEN_WIDTH = Option.WITDH(0)
+SCREEN_HEIGHT = Option.HEIGHT(0)
 
 class CAMERAGROUP(pygame.sprite.Group):
     def __init__(self):
@@ -17,7 +19,7 @@ class CAMERAGROUP(pygame.sprite.Group):
         self.background_rect = self.scaled_bg.get_rect(topleft = (0,0))
 
     def centerCamera(self, firstFighter, secondFighter):
-        self.offset.x = ((firstFighter.hitbox.centerx - self.half_width) + (secondFighter.hitbox.centerx - self.half_width)) / 2
+        self.offset.x = ((firstFighter.hitbox.centerx - self.half_width) + (secondFighter.hitbox.centerx - self.half_width)) / 2 
         if self.offset.x <= 0:
             self.offset.x = 0
         elif self.offset.x >= 1050:

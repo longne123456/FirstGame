@@ -20,7 +20,7 @@ class Fighter(pygame.sprite.Sprite):
         self.player = player
         self.flip = False
         self.hitbox = pygame.Rect((x, y, SCREEN_WIDTH / 25,SCREEN_HEIGHT /6))
-        
+        self.image = pygame.image.load("asset/images/player/warrior/Sprites/warrior.png")
         self.scaled_image = pygame.transform.scale(self.image, (96, 152))
         self.vel_y = 0
         self.jump = False
@@ -131,7 +131,7 @@ class Fighter(pygame.sprite.Sprite):
 #BACKGROUND 2500x600
         self.vel_y += GRAVITY
         dy += self.vel_y
-
+        #Đảm bảo ng chơi dell ra ngoài
         if self.hitbox.left + dx < 0:
             dx = -self.hitbox.left
         if self.hitbox.right + dx > 2000:

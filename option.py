@@ -1,5 +1,5 @@
 width = 1080
-height = 720
+height = 600
 class Option():
     def __init__(self,r):
         self.r = 0
