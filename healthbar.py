@@ -1,12 +1,13 @@
 import pygame, sys
+from option import Option
 
 RED = (255, 0, 0)
 GREEN = (0,255,0)
 YELLOW = (255,255,0)
 WHITE = (255,255,255)
-SCREEN_WIDTH = 1000
-SCREEN_HEIGHT = 600
 
+SCREEN_WIDTH = Option.WITDH(0)
+SCREEN_HEIGHT = Option.HEIGHT(0)
 pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 clock = pygame.time.Clock()

@@ -5,7 +5,6 @@ from Fighter import Fighter
 class CAMERAGROUP(pygame.sprite.Group):
     def __init__(self):
         super().__init__()
-    
         self.display_surface = pygame.display.get_surface()
         #camera bị bẻ cong
         self.offset = pygame.math.Vector2()
@@ -18,7 +17,7 @@ class CAMERAGROUP(pygame.sprite.Group):
         self.background_rect = self.scaled_bg.get_rect(topleft = (0,0))
 
     def centerCamera(self, firstFighter, secondFighter):
-        self.offset.x = ((firstFighter.hitbox.centerx - self.half_width) + (secondFighter.hitbox.centerx - self.half_width))/2
+        self.offset.x = ((firstFighter.hitbox.centerx - self.half_width) + (secondFighter.hitbox.centerx - self.half_width)) / 2
         if self.offset.x <= 0:
             self.offset.x = 0
         elif self.offset.x >= 1050:
@@ -31,6 +30,7 @@ class CAMERAGROUP(pygame.sprite.Group):
              
         #background 
         background_offset = self.background_rect.topleft - self.offset
+
         self.display_surface.blit(self.scaled_bg,background_offset)
 
         #sort

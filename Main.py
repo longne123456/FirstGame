@@ -1,5 +1,6 @@
 import sys
 import pygame
+from option import Option
 from button2 import Button2
 from Fighter import Fighter
 from camera import CAMERAGROUP
@@ -9,12 +10,25 @@ YELLOW = (255, 255, 0)
 WHITE = (255, 255, 255)
 GREEN = (100,205,0)
 
-SCREEN_WIDTH = 1000
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = Option.WITDH(0)
+SCREEN_HEIGHT = Option.HEIGHT(0)
+
+player1_size = 162
+player1_scale = 4
+player1_offset = [72, 56]
+player1_data = [player1_size, player1_scale, player1_offset]
+player1_animation_steps = [10, 8, 1, 7, 7, 3, 7]
+player1_sheet =  pygame.image.load("asset/images/player/warrior/Sprites/warrior.png")
+player2_size = 250
+player2_scale = 3
+player2_offset = [112, 107]
+player2_data = [player2_size, player2_scale, player2_offset]
+player2_animation_steps = [8, 8, 1, 8, 8, 3, 7]
+player2_sheet =  pygame.image.load("asset/images/player/wizard/Sprites/wizard.png")
 
 # Background vs Font
 BG = pygame.image.load("asset/menu.png")
-scaled_BG = pygame.transform.scale(BG, (2500, 650))
+scaled_BG = pygame.transform.scale(BG, (SCREEN_WIDTH , SCREEN_HEIGHT))
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("asset/font/font.ttf", size)
 
@@ -23,7 +37,7 @@ pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 
 
-pygame.display.set_caption('Ngo Quyen Fighter')
+pygame.display.set_caption('BẮP QUYỀN')
 
 # Timer
 clock = pygame.time.Clock()
@@ -45,9 +59,8 @@ punchSound.set_volume(0.1)
 # Camera
 cameraGroup = CAMERAGROUP()
 
-firstFighter = Fighter(1, 680, 200, False, 0,  punchSound, cameraGroup)
-secondFighter = Fighter(2, 1180, 200, True, 0, punchSound, cameraGroup)
-
+firstFighter = Fighter(1, SCREEN_WIDTH /4 , SCREEN_HEIGHT /3, False, player1_data, player1_sheet, player1_animation_steps, punchSound, cameraGroup)
+secondFighter = Fighter(2, SCREEN_WIDTH /2 * 1.5 , SCREEN_HEIGHT /3, True, player2_data , player2_sheet, player2_animation_steps,punchSound, cameraGroup)
 
 
 def after_playbutton():
@@ -145,5 +158,6 @@ def main_menu():
                     sys.exit()
 
         pygame.display.update()
+
 
 main_menu()

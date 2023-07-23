@@ -1,5 +1,7 @@
 import pygame
-screen = pygame.display.set_mode((1000,600))
+from option import Option
+
+screen = pygame.display.set_mode((Option.SCREEN_WIDTH,Option.SCREEN_HEIGHT))
 class Button():
     def __init__(self,x,y,image):
         self.image = image

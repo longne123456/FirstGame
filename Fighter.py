@@ -1,5 +1,8 @@
 # Làm nhân vật
 import pygame
+from option import Option
+SCREEN_WIDTH = Option.WITDH(0)
+SCREEN_HEIGHT = Option.HEIGHT(0)
 
 ATTACK_WIDTH = 0
 ATTACK_Y = 1
@@ -8,17 +11,16 @@ RED = (255, 0, 0)
 GREEN = (0,255,0)
 YELLOW = (255,255,0)
 WHITE = (255,255,255)
-SCREEN_WIDTH = 1000
-SCREEN_HEIGHT = 600
+
 
 #pygame.Rect((x, y, 80, 180))
 class Fighter(pygame.sprite.Sprite):
-    def __init__(self, player, x, y, flip, data, sound, group):
+    def __init__(self, player, x, y, flip, data, player_sheet, player_animation_steps, sound, group):
         super().__init__(group)
         self.player = player
         self.flip = False
-        self.hitbox = pygame.Rect((x, y, 40, 100))
-        self.image = pygame.image.load("asset/images/player/KhoaNgo.png").convert_alpha()
+        self.hitbox = pygame.Rect((x, y, SCREEN_WIDTH / 25,SCREEN_HEIGHT /6))
+        
         self.scaled_image = pygame.transform.scale(self.image, (96, 152))
         self.vel_y = 0
         self.jump = False
@@ -30,42 +32,29 @@ class Fighter(pygame.sprite.Sprite):
         self.attack_sound = sound
         self.running = False
         self.alive = True
-        
+        self.size = data[0]
+        self.player_scale = data[1]
+        self.offset = data[2]
+        self.flip = flip
+        self.animation_list = self.load_images(player_sheet, player_animation_steps)
+        self.action = 0#0:idle #1:run #2:jump #3:attack1 #4: attack2 #5:hit #6:death
+        self.frame_index = 0
+        self.image = self.animation_list[self.action][self.frame_index]
         
     
     def load_images(self, player_sheet, player_animation_steps):
-            animation_list = []
-            for y, animation in enumerate(player_animation_steps):
-                temp_images_list = []
-            for x in range(animation):
-                temp_img = player_sheet.subsurface(x * self.player_size, y * self.player_size, self.player_size, self.player_size)
-                temp_images_list.append(pygame.transform.scale(temp_img, (self.player_size * self.player_scale, self.player_size * self.player_scale)))
-            animation_list.append(temp_images_list)
-            return animation_list
-        
+        animation_list = []
+        for y, animation in enumerate(player_animation_steps):
+            temp_images_list = []
+        for x in range(animation):
+            temp_img = player_sheet.subsurface(x * self.size, y * self.size, self.size, self.size)
+            temp_images_list.append(pygame.transform.scale(temp_img, (self.size * self.player_scale, self.size * self.player_scale)))
+        animation_list.append(temp_images_list)
+        return animation_list
+    
+
     # animation
-    def move(self, screen_width, screen_height, surface, target, player_sheet, player_animation_steps, choose):
-
-        if self.choose == 0: #warrior
-            self.player_size = 162
-            self.player_scale = 4
-            self.player_offset = [72, 56]
-            self.player_data = [self.player_size, self.player_scale, self.player_offset]
-            self.player_animation_steps = [10, 8, 1, 7, 7, 3, 7]
-            self.player_sheet =  pygame.image.load("asset/images/player/warrior/Sprites/warrior.png").convert_alpha()
-
-        elif self.choose == 1: #wizard
-            self.player_size = 250
-            self.player_scale = 3
-            self.player_offset = [112, 107]
-            self.player_data = [self.player_size, self.player_scale, self.player_offset]
-            self.player_animation_steps = [8, 8, 1, 8, 8, 3, 7]
-            self.player_sheet =  pygame.image.load("asset/images/player/wizard/Sprites/wizard.png").convert_alpha()
-        
-        self.animation_list = self.load_images(player_sheet, player_animation_steps)
-        self.frame_index = 0
-        self.action = 0 #0:idle #1:run #2:jump #3:attack1 #4: attack2 #5:hit #6:death
-        self.image = self.animation_list[self.action][self.frame_index]
+    def move(self, screen_width, screen_height, surface, target):
 
         SPEED = 10
         GRAVITY = 2
@@ -78,6 +67,7 @@ class Fighter(pygame.sprite.Sprite):
         if self.attacking is False:
             if self.player == 1:
                 # Di chuyển
+                self.choose = 0
                 if key[pygame.K_a]:
                     dx = -SPEED
                     self.running = True
@@ -86,20 +76,20 @@ class Fighter(pygame.sprite.Sprite):
                     self.running = True
                 # Nhảy
                 if key[pygame.K_w] and self.jump is False :
-                    self.vel_y = -30
+                    self.vel_y = - SCREEN_HEIGHT / 20
                     self.jump = True
             
                 if key[pygame.K_r] or key[pygame.K_t]:
                     
                     # Xác định kiểu tấn công nào được sử dụng
                     if key[pygame.K_r]:
-                        self.attack(surface, target,1,150,100)
+                        self.attack(surface, target,1,SCREEN_WIDTH / 6.666666667,SCREEN_HEIGHT/6)
                         self.attack_type = 1
                         self.dmg = 1
                         self.attack_cooldown = 20
 
                     if key[pygame.K_t]:
-                        self.attack(surface, target,1.35,200,50)
+                        self.attack(surface, target,1.35,SCREEN_WIDTH/ 5,SCREEN_HEIGHT /12)
                         self.attack_type = 2
                         self.dmg = 3
                         self.attack_cooldown = 100                                           
@@ -107,6 +97,7 @@ class Fighter(pygame.sprite.Sprite):
 
             if self.player == 2:
                 # Di chuyển
+                self.choose = 1
                 if key[pygame.K_LEFT]:
                     dx = -SPEED
                     self.running = True
@@ -115,7 +106,7 @@ class Fighter(pygame.sprite.Sprite):
                     self.running = True
                 # Nhảy
                 if key[pygame.K_UP] and self.jump is False :
-                    self.vel_y = -30
+                    self.vel_y = -SCREEN_HEIGHT /20
                     self.jump = True
                        
                 if key[pygame.K_KP1] or key[pygame.K_KP2]:                    
@@ -196,6 +187,31 @@ class Fighter(pygame.sprite.Sprite):
             self.update_action(1) #1:run
         else:
             self.update_action(0) #0:idle
+
+        animation_cooldown = 50
+        #update image
+        self.image = self.animation_list[self.action][self.frame_index]
+        #check if enough time has passed since the last update
+        if pygame.time.get_ticks() - self.update_time > animation_cooldown:
+            self.frame_index += 1
+            self.update_time = pygame.time.get_ticks()
+        #check if the animation has finished
+        if self.frame_index >= len(self.animation_list[self.action]):
+        #if the player is dead then end the animation
+            if self.alive == False:
+                self.frame_index = len(self.animation_list[self.action]) - 1
+            else:
+                self.frame_index = 0
+                #check if an attack was executed
+                if self.action == 3 or self.action == 4:
+                    self.attacking = False
+                    self.attack_cooldown = 20
+                #check if damage was taken
+                if self.action == 5:
+                    self.hit = False
+                    #if the player was in the middle of an attack, then the attack is stopped
+                    self.attacking = False
+                    self.attack_cooldown = 20
 
     def update_action(self, new_action):
         if new_action != self.action:
