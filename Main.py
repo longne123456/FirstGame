@@ -40,12 +40,18 @@ pygame.mixer.music.play(-1, 0.0, 5000)
 punchSound = pygame.mixer.Sound("asset/audio/punch.mp3")
 punchSound.set_volume(0.1)
 
+
+
 # Camera
 cameraGroup = CAMERAGROUP()
+
 firstFighter = Fighter(1, 680, 200, False, 0,  punchSound, cameraGroup)
 secondFighter = Fighter(2, 1180, 200, True, 0, punchSound, cameraGroup)
 
+
+
 def after_playbutton():
+        
         firstFighter.move(SCREEN_WIDTH,SCREEN_HEIGHT,screen,secondFighter)
         secondFighter.move(SCREEN_WIDTH,SCREEN_HEIGHT,screen,firstFighter)
 
