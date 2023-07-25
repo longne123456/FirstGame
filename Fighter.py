@@ -20,8 +20,6 @@ class Fighter(pygame.sprite.Sprite):
         self.player = player
         self.flip = False
         self.hitbox = pygame.Rect((x, y, SCREEN_WIDTH / 25,SCREEN_HEIGHT /6))
-        self.image = pygame.image.load("asset/images/player/warrior/Sprites/warrior.png")
-        self.scaled_image = pygame.transform.scale(self.image, (96, 152))
         self.vel_y = 0
         self.jump = False
         self.attacking = False
@@ -37,9 +35,10 @@ class Fighter(pygame.sprite.Sprite):
         self.offset = data[2]
         self.flip = flip
         self.animation_list = self.load_images(player_sheet, player_animation_steps)
-        self.action = 0#0:idle #1:run #2:jump #3:attack1 #4: attack2 #5:hit #6:death
+        self.action = 0 #0:idle #1:run #2:jump #3:attack1 #4: attack2 #5:hit #6:death
         self.frame_index = 0
         self.image = self.animation_list[self.action][self.frame_index]
+        
         
     
     def load_images(self, player_sheet, player_animation_steps):
@@ -127,8 +126,8 @@ class Fighter(pygame.sprite.Sprite):
                     self.attacking = False
 
              
-
 #BACKGROUND 2500x600
+
         self.vel_y += GRAVITY
         dy += self.vel_y
         #Đảm bảo ng chơi dell ra ngoài
@@ -164,10 +163,6 @@ class Fighter(pygame.sprite.Sprite):
             pygame.draw.rect(surface, (0, 255, 0), attacking_hitbox)
             if attacking_hitbox.colliderect(target.hitbox):
                 target.health -= self.dmg
-    
-    def draw(seft, surface):
-        pygame.draw.rect(surface, (255, 0, 0), seft.hitbox)
-
 
     def update_animation(self):
         if self.health <= 0:
@@ -189,33 +184,37 @@ class Fighter(pygame.sprite.Sprite):
             self.update_action(0) #0:idle
 
         animation_cooldown = 50
-        #update image
+        # update image
         self.image = self.animation_list[self.action][self.frame_index]
-        #check if enough time has passed since the last update
+        # Kiểm tra thời gian animation
         if pygame.time.get_ticks() - self.update_time > animation_cooldown:
             self.frame_index += 1
             self.update_time = pygame.time.get_ticks()
-        #check if the animation has finished
+        # Kiểm tra animation đã xong chưa
         if self.frame_index >= len(self.animation_list[self.action]):
-        #if the player is dead then end the animation
+        # Nếu nhân vật chết thì kết thúc animation
             if self.alive == False:
                 self.frame_index = len(self.animation_list[self.action]) - 1
             else:
                 self.frame_index = 0
-                #check if an attack was executed
+                # Kiểm tra kiểu tấn công
                 if self.action == 3 or self.action == 4:
                     self.attacking = False
                     self.attack_cooldown = 20
-                #check if damage was taken
+                # Kiểm tra nếu chịu sát thương
                 if self.action == 5:
                     self.hit = False
-                    #if the player was in the middle of an attack, then the attack is stopped
+                    # Attack cooldown
                     self.attacking = False
                     self.attack_cooldown = 20
 
     def update_action(self, new_action):
         if new_action != self.action:
             self.action = new_action
-            #update the animation settings
             self.frame_index = 0
             self.update_time = pygame.time.get_ticks()
+    
+    def draw(self, surface):
+        img = pygame.transform.flip(self.image, self.flip, False) 
+        surface.blit(img, (self.hitbox.x - (self.offset[0] * self.player_scale), self.hitbox.y - (self.offset[1] * self.player_scale)))
+        

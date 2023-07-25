@@ -18,8 +18,12 @@ class CAMERAGROUP(pygame.sprite.Group):
         self.background = pygame.image.load('asset/images/background/truong.png').convert_alpha()
         self.scaled_bg = pygame.transform.scale(self.background, (2500, 650)) 
         self.background_rect = self.scaled_bg.get_rect(topleft = (0,0))
-    def setCameraToCenter(self,Fighter1,Fighter2)
-        sefl.offset = 
+    def centerCamera(self, firstFighter, secondFighter):
+        self.offset.x = ((firstFighter.hitbox.centerx - self.half_width) + (secondFighter.hitbox.centerx - self.half_width))/2
+        if self.offset.x <= 0:
+            self.offset.x = 0
+        elif self.offset.x >= 1000:
+            self.offset.x = 1000
 
     def Camerabeh(self,Fighter1,Fighter2):
         if(Fighter1.centerx <= SCREEN_WIDTH/15 & Fighter2.centerx <= SCREEN_WIDTH/15):
@@ -29,14 +33,12 @@ class CAMERAGROUP(pygame.sprite.Group):
         
     def setCameraToCenter(self,Fighter1,Fighter2):
         #background 
-
+        self.centerCamera(Fighter1,Fighter2)
         background_offset = self.background_rect.topleft - self.offset
-
-
-        self.display_surface.blit(self.scaled_bg,,)
+        self.display_surface.blit(self.scaled_bg,background_offset)
 
         #sort
         for sprite in sorted(self.sprites(),key = lambda sprite: sprite.hitbox.centery):
             offset_pos = sprite.hitbox.topleft - self.offset
-            self.display_surface.blit(sprite.scaled_image,offset_pos)
+            self.display_surface.blit(sprite.image,offset_pos)
             
