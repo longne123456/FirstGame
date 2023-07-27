@@ -59,8 +59,8 @@ punchSound.set_volume(0.1)
 # Camera
 cameraGroup = CAMERAGROUP()
 
-firstFighter = Fighter(1, 250, 100, False, player1_data, player1_sheet, player1_animation_steps, punchSound, cameraGroup)
-secondFighter = Fighter(2, 500, 100, True, player2_data , player2_sheet, player2_animation_steps,punchSound, cameraGroup)
+firstFighter = Fighter(1, SCREEN_WIDTH/4, SCREEN_HEIGHT- SCREEN_HEIGHT/4, False, player1_data, player1_sheet, player1_animation_steps, punchSound, cameraGroup)
+secondFighter = Fighter(2, SCREEN_WIDTH- SCREEN_WIDTH/4, SCREEN_HEIGHT- SCREEN_HEIGHT/4, True, player2_data , player2_sheet, player2_animation_steps,punchSound, cameraGroup)
 
 
 def after_playbutton():

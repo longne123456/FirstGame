@@ -134,7 +134,7 @@ class Fighter(pygame.sprite.Sprite):
         if self.hitbox.left + dx < 0:
             dx = -self.hitbox.left
         if self.hitbox.right + dx > SCREEN_WIDTH:
-            dx = 2000 - self.hitbox.right
+            dx = SCREEN_WIDTH - self.hitbox.right
         if self.hitbox.bottom + dy > SCREEN_HEIGHT - 70:
             self.vel_y = 0
             self.jump = False
